@@ -23,6 +23,7 @@ public class MovieGUI extends JFrame implements ActionListener, CallBack {
 	private JPanel searchingPanel;
 
 	private JTextArea textArea;
+	private JTabbedPane jtab;
 
 	private JTextField searchingTextField;
 	private JTextField textField2;
@@ -35,7 +36,7 @@ public class MovieGUI extends JFrame implements ActionListener, CallBack {
 	private JButton addBtn;
 
 	Vector vcList = new Vector();
-	JList<String> jList = new JList<>();
+	JList<EmployeesDto2> jList = new JList<>();
 
 	ScrollPane scrollPane = new ScrollPane();
 	InsertPanel insertPanel = new InsertPanel();
@@ -56,7 +57,7 @@ public class MovieGUI extends JFrame implements ActionListener, CallBack {
 		mainpanel.setLayout(null);
 		setResizable(false);
 
-		JTabbedPane jtab = new JTabbedPane(JTabbedPane.TOP);
+		jtab = new JTabbedPane(JTabbedPane.TOP);
 		jtab.setBounds(5, 5, 675, 600);
 		mainpanel.add(jtab);
 
@@ -87,9 +88,13 @@ public class MovieGUI extends JFrame implements ActionListener, CallBack {
 		searchingPanel.add(addBtn);
 		addBtn.setBounds(560, 100, 100, 25);
 
+		setBtn = new JButton("Update");
+		searchingPanel.add(setBtn);
+		setBtn.setBounds(560, 140, 100, 25);
+
 		deleteBtn = new JButton("Delet");
 		searchingPanel.add(deleteBtn);
-		deleteBtn.setBounds(560, 140, 100, 25);
+		deleteBtn.setBounds(560, 180, 100, 25);
 
 		jtab.addTab("insert", null, insertPanel, null);
 		jtab.addTab("update", null, updatePanel, null);
@@ -102,6 +107,7 @@ public class MovieGUI extends JFrame implements ActionListener, CallBack {
 		searchingTextField.addActionListener(this);
 		allSearchingBtn.addActionListener(this);
 		addBtn.addActionListener(this);
+		setBtn.addActionListener(this);
 		insertPanel.getButton1().addActionListener(this);
 		updatePanel.getButton1().addActionListener(this);
 	}
@@ -118,7 +124,27 @@ public class MovieGUI extends JFrame implements ActionListener, CallBack {
 			jList.setListData(vcList);
 			scrollPane.add(jList);
 		} else if (e.getSource() == addBtn) {
-			
+			jtab.setSelectedComponent(insertPanel);
+		} else if (e.getSource() == setBtn) {
+			EmployeesDto2 dto2 = jList.getSelectedValue();
+			updatePanel.getInputData1().setText(dto2.getLast_name());
+			updatePanel.getInputData2().setText(dto2.getEmp_no() + "");
+			updatePanel.getInputData3().setText(dto2.getLast_name());
+			updatePanel.getInputData4().setText("M");
+			updatePanel.getInputData5().setText(dto2.getEmp_no() + "");
+			jtab.setSelectedComponent(updatePanel);
+		} else if (e.getSource() == deleteBtn) {
+			if (vcList.size() == 0) {
+				textArea.append("삭제할 데이터가 없습니다.");
+			} else if (vcList.size() != 0) {
+				int index = jList.getSelectedIndex();
+				{
+					vcList.remove(index);
+					jList.ensureIndexIsVisible(index);
+					jList.repaint();
+				}
+
+			}
 		}
 
 		if (e.getSource() == insertPanel.getButton1()) {

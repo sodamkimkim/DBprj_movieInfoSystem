@@ -1,24 +1,26 @@
 package movieInfo;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.lang.reflect.Field;
 import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-public class MovieGUI extends JFrame implements ActionListener, CallBack {
+public class MovieGUI extends JFrame implements ActionListener {
 
-	EmployeesDao2 dao;
+	private MovieInfoDao dao;
 	private JPanel mainpanel;
 	private JPanel searchingPanel;
 
@@ -26,8 +28,6 @@ public class MovieGUI extends JFrame implements ActionListener, CallBack {
 	private JTabbedPane jtab;
 
 	private JTextField searchingTextField;
-	private JTextField textField2;
-	private JTextField textField3;
 
 	private JButton searchingBtn;
 	private JButton allSearchingBtn;
@@ -35,12 +35,14 @@ public class MovieGUI extends JFrame implements ActionListener, CallBack {
 	private JButton setBtn;
 	private JButton addBtn;
 
-	Vector vcList = new Vector();
-	JList<EmployeesDto2> jList = new JList<>();
+	Vector<MovieInfoDto> vcList = new Vector<>();
+	JList<MovieInfoDto> jList = new JList<>();
 
 	ScrollPane scrollPane = new ScrollPane();
-	InsertPanel insertPanel = new InsertPanel();
-	UpdatePanel updatePanel = new UpdatePanel();
+	MovieInfoPanel movieInfoPanel = new MovieInfoPanel();
+
+	//
+	int movieinfoNum;
 
 	public MovieGUI() {
 		initData();
@@ -48,17 +50,20 @@ public class MovieGUI extends JFrame implements ActionListener, CallBack {
 	}
 
 	private void initData() {
-		setTitle("Movie Information");
+
+		setTitle("Movie Information Program");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainpanel = new JPanel();
-		setBounds(0, 0, 700, 650);
-		mainpanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(mainpanel);
-		mainpanel.setLayout(null);
+		setBounds(0, 0, 850, 850);
 		setResizable(false);
 
+		mainpanel = new JPanel();
+		mainpanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		mainpanel.setSize(getWidth(), getHeight());
+		mainpanel.setLayout(null);
+		setContentPane(mainpanel);
+
 		jtab = new JTabbedPane(JTabbedPane.TOP);
-		jtab.setBounds(5, 5, 675, 600);
+		jtab.setBounds(5, 5, 800, 800);
 		mainpanel.add(jtab);
 
 		searchingPanel = new JPanel();
@@ -77,27 +82,29 @@ public class MovieGUI extends JFrame implements ActionListener, CallBack {
 		scrollPane.setBounds(20, 60, 525, 500);
 
 		searchingBtn = new JButton("Search");
-		searchingPanel.add(searchingBtn);
 		searchingBtn.setBounds(560, 20, 100, 25);
+		searchingBtn.setBackground(Color.WHITE);
+		searchingPanel.add(searchingBtn);
 
 		allSearchingBtn = new JButton("Search All");
-		searchingPanel.add(allSearchingBtn);
 		allSearchingBtn.setBounds(560, 60, 100, 25);
+		allSearchingBtn.setBackground(Color.WHITE);
+		searchingPanel.add(allSearchingBtn);
 
 		addBtn = new JButton("Insert");
-		searchingPanel.add(addBtn);
 		addBtn.setBounds(560, 100, 100, 25);
+		addBtn.setBackground(Color.WHITE);
+		searchingPanel.add(addBtn);
 
 		setBtn = new JButton("Update");
-		searchingPanel.add(setBtn);
 		setBtn.setBounds(560, 140, 100, 25);
+		setBtn.setBackground(Color.WHITE);
+		searchingPanel.add(setBtn);
 
-		deleteBtn = new JButton("Delet");
-		searchingPanel.add(deleteBtn);
+		deleteBtn = new JButton("Delete");
 		deleteBtn.setBounds(560, 180, 100, 25);
-
-		jtab.addTab("insert", null, insertPanel, null);
-		jtab.addTab("update", null, updatePanel, null);
+		deleteBtn.setBackground(Color.WHITE);
+		searchingPanel.add(deleteBtn);
 
 		setVisible(true);
 	}
@@ -108,58 +115,189 @@ public class MovieGUI extends JFrame implements ActionListener, CallBack {
 		allSearchingBtn.addActionListener(this);
 		addBtn.addActionListener(this);
 		setBtn.addActionListener(this);
-		insertPanel.getButton1().addActionListener(this);
-		updatePanel.getButton1().addActionListener(this);
+		deleteBtn.addActionListener(this);
+		movieInfoPanel.getBtnInsertMovieInfo().addActionListener(this);
+		movieInfoPanel.getBtnUpdateMovieInfo().addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		dao = new EmployeesDao2();
+		dao = new MovieInfoDao();
 
-		if (e.getSource() == allSearchingBtn) {
-			for (int i = 0; i < dao.empolyeesInfo().size(); i++) {
-				vcList.add(dao.empolyeesInfo().get(i));
+		// Search 버튼 
+		if (e.getSource() == searchingBtn) {
+
+			Vector<MovieInfoDto> selectMoviTitleResult = dao.selectMovieTitle(searchingTextField.getText());
+
+			for (int i = 0; i < selectMoviTitleResult.size(); i++) {
+				vcList.add(selectMoviTitleResult.get(i));
 			}
 
 			jList.setListData(vcList);
 			scrollPane.add(jList);
-		} else if (e.getSource() == addBtn) {
-			jtab.setSelectedComponent(insertPanel);
-		} else if (e.getSource() == setBtn) {
-			EmployeesDto2 dto2 = jList.getSelectedValue();
-			updatePanel.getInputData1().setText(dto2.getLast_name());
-			updatePanel.getInputData2().setText(dto2.getEmp_no() + "");
-			updatePanel.getInputData3().setText(dto2.getLast_name());
-			updatePanel.getInputData4().setText("M");
-			updatePanel.getInputData5().setText(dto2.getEmp_no() + "");
-			jtab.setSelectedComponent(updatePanel);
+
+			jList.setSelectedValue(null, false);
+		} 
+		
+		// Search All 버튼
+		else if (e.getSource() == allSearchingBtn) {
+
+			vcList.removeAllElements();
+
+			Vector<MovieInfoDto> selectAllMovieInfoResult = dao.selectAllMovieInfo();
+
+			for (int i = 0; i < selectAllMovieInfoResult.size(); i++) {
+				vcList.add(selectAllMovieInfoResult.get(i));
+			}
+
+			jList.setListData(vcList);
+			scrollPane.add(jList);
+
+			jList.setSelectedValue(null, false);
+		} 
+		
+		// Insert 버튼
+		else if (e.getSource() == addBtn) {
+			
+			String[] options = { "MOVIE", "PERSON", "STEP", "CREW" };
+			int option = JOptionPane.showOptionDialog(null, "추가할 항목을 선택해주세요", "INSERT", JOptionPane.DEFAULT_OPTION,
+					JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+
+			if (option == 0) {
+				
+				movieInfoPanel.getBtnUpdateMovieInfo().setEnabled(false);
+				movieInfoPanel.getBtnInsertMovieInfo().setEnabled(true);
+
+				jtab.addTab("insert", null, movieInfoPanel, null);
+				jtab.setSelectedComponent(movieInfoPanel);
+				
+			}
+			
+			jList.setSelectedValue(null, false);
+			
+		} 
+		
+		// Update 버튼
+		else if (e.getSource() == setBtn) {
+			
+			if (jList.getSelectedValue() == null) {
+				
+				System.out.println("업데이트 항목을 선택해주세요");
+				JOptionPane.showMessageDialog(null, "수정하려는 항목을 선택해주세요", "ERROR", JOptionPane.ERROR_MESSAGE);
+
+			} else if (jList.getSelectedValue() != null) {
+				
+				movieInfoPanel.getBtnUpdateMovieInfo().setEnabled(true);
+				movieInfoPanel.getBtnInsertMovieInfo().setEnabled(false);
+				
+				MovieInfoDto dto = jList.getSelectedValue();
+
+				movieInfoPanel.getFldMovieTitle().setText(dto.getMovieTitle());
+				movieInfoPanel.getFldDirectorName().setText(dto.getDirectorName());
+
+				movieInfoPanel.getFldTotalIncome().setText(dto.getTotalIncome() + "");
+				movieInfoPanel.getFldAudience().setText(dto.getAudience() + "");
+				movieInfoPanel.getFldRating().setText(dto.getRating() + "");
+
+				movieInfoPanel.getFldReleaseYear().setText(dto.getReleaseYear() + "");
+				movieInfoPanel.getFldReleaseMonth().setText(dto.getReleaseMonth() + "");
+
+				movieInfoPanel.getFldMoviePlot().setText(dto.getMoviePlot());
+				movieInfoPanel.getFldReview1().setText(dto.getReview1());
+				movieInfoPanel.getFldReview2().setText(dto.getReview2());
+				movieInfoPanel.getFldReview3().setText(dto.getReview3());
+
+				movieinfoNum = dto.getMovieInfoNum();
+				
+				jList.setSelectedValue(null, false);
+				
+				jtab.addTab("update", null, movieInfoPanel, null);
+				jtab.setSelectedComponent(movieInfoPanel);
+
+			}
+
+			
+
 		} else if (e.getSource() == deleteBtn) {
-			if (vcList.size() == 0) {
-				textArea.append("삭제할 데이터가 없습니다.");
-			} else if (vcList.size() != 0) {
-				int index = jList.getSelectedIndex();
-				{
+			
+			if (jList.getSelectedValue() == null) {
+				
+				System.out.println("삭제할 데이터가 없습니다.");
+				JOptionPane.showMessageDialog(null, "삭제하려는 항목을 선택해주세요", "ERROR", JOptionPane.ERROR_MESSAGE);
+				
+			} else {
+				
+				if (vcList.size() != 0) {
+					
+					int index = jList.getSelectedIndex();
 					vcList.remove(index);
 					jList.ensureIndexIsVisible(index);
 					jList.repaint();
+					
 				}
-
 			}
-		}
+			jList.setSelectedValue(null, false);
+			
+		} 
+		
+		// MovieInfoPanel - 영화정보 등록하기 버튼
+		else if (e.getSource() == movieInfoPanel.getBtnInsertMovieInfo()) {
+			
+			Field[] atr = movieInfoPanel.getClass().getFields();
 
-		if (e.getSource() == insertPanel.getButton1()) {
+			if(atr.length != 11) {
+				
+				System.out.println("빈칸을 전부 입력해주세요");
+				JOptionPane.showMessageDialog(null, "빈칸을 전부 입력해주세요", "ERROR", JOptionPane.ERROR_MESSAGE);
+				
+			} else {
+				
+				MovieInfoDto dto = new MovieInfoDto();
+				addDtoMovieInfo(dto);
+				dao.insertMovieInfo(dto);
+				
+			}
+		} 
+		
+		// MovieInfoPanel - 영화정보 수정하기 버튼
+		else if (e.getSource() == movieInfoPanel.getBtnUpdateMovieInfo()) {
+			
+			Field[] atr = movieInfoPanel.getClass().getFields();
 
-			dao.insert(insertPanel.getInputData1().getText(), insertPanel.getInputData2().getText(),
-					insertPanel.getInputData3().getText(), insertPanel.getInputData4().getText(),
-					insertPanel.getInputData5().getText());
+			if(atr.length != 11) {
+				
+				System.out.println("빈칸을 전부 입력해주세요");
+				JOptionPane.showMessageDialog(null, "빈칸을 전부 입력해주세요", "ERROR", JOptionPane.ERROR_MESSAGE);
+				
+			} else {
+
+				MovieInfoDto dto = new MovieInfoDto();
+				addDtoMovieInfo(dto);
+				dao.updateMovieInfo(movieinfoNum, dto);
+				
+			}
 
 		}
-		if (e.getSource() == updatePanel.getButton1()) {
-			dao.update(updatePanel.getInputData1().getText(), updatePanel.getInputData2().getText(),
-					updatePanel.getInputData3().getText(), updatePanel.getInputData4().getText(),
-					updatePanel.getInputData5().getText());
-			System.out.println(updatePanel.getInputData1().getText());
-		}
+	}
+	
+	// MovieInfo 정보를 Dto로 밀어 넣는 메소드 ( insert, update 에서 사용 )
+	private void addDtoMovieInfo(MovieInfoDto dto) {
+
+		dto.setMovieTitle(movieInfoPanel.getFldMovieTitle().getText());
+		dto.setDirectorName(movieInfoPanel.getFldDirectorName().getText());
+
+		dto.setReleaseYear(Integer.parseInt(movieInfoPanel.getFldReleaseYear().getText()));
+		dto.setReleaseMonth(Integer.parseInt(movieInfoPanel.getFldReleaseMonth().getText()));
+
+		dto.setMoviePlot(movieInfoPanel.getFldMoviePlot().getText());
+
+		dto.setTotalIncome(Integer.parseInt(movieInfoPanel.getFldTotalIncome().getText()));
+		dto.setAudience(Integer.parseInt(movieInfoPanel.getFldAudience().getText()));
+		dto.setRating(Float.parseFloat((movieInfoPanel.getFldRating().getText())));
+
+		dto.setReview1(movieInfoPanel.getFldReview1().getText());
+		dto.setReview2(movieInfoPanel.getFldReview2().getText());
+		dto.setReview3(movieInfoPanel.getFldReview3().getText());
 	}
 
 	public static void main(String[] args) {

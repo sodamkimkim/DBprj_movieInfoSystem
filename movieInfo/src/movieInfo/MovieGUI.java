@@ -21,8 +21,6 @@ public class MovieGUI extends JFrame implements ActionListener, CallBack {
 	EmployeesDao2 dao;
 	private JPanel mainpanel;
 	private JPanel searchingPanel;
-	private JPanel addpanel;
-	private JPanel setPanel;
 
 	private JTextArea textArea;
 
@@ -37,10 +35,11 @@ public class MovieGUI extends JFrame implements ActionListener, CallBack {
 	private JButton addBtn;
 
 	Vector vcList = new Vector();
-	JList jList = new JList();
+	JList<String> jList = new JList<>();
 
 	ScrollPane scrollPane = new ScrollPane();
 	InsertPanel insertPanel = new InsertPanel();
+	UpdatePanel updatePanel = new UpdatePanel();
 
 	public MovieGUI() {
 		initData();
@@ -93,6 +92,7 @@ public class MovieGUI extends JFrame implements ActionListener, CallBack {
 		deleteBtn.setBounds(560, 140, 100, 25);
 
 		jtab.addTab("insert", null, insertPanel, null);
+		jtab.addTab("update", null, updatePanel, null);
 
 		setVisible(true);
 	}
@@ -101,7 +101,9 @@ public class MovieGUI extends JFrame implements ActionListener, CallBack {
 		searchingBtn.addActionListener(this);
 		searchingTextField.addActionListener(this);
 		allSearchingBtn.addActionListener(this);
+		addBtn.addActionListener(this);
 		insertPanel.getButton1().addActionListener(this);
+		updatePanel.getButton1().addActionListener(this);
 	}
 
 	@Override
@@ -109,16 +111,28 @@ public class MovieGUI extends JFrame implements ActionListener, CallBack {
 		dao = new EmployeesDao2();
 
 		if (e.getSource() == allSearchingBtn) {
-			vcList.add(dao.empolyeesInfo());
+			for (int i = 0; i < dao.empolyeesInfo().size(); i++) {
+				vcList.add(dao.empolyeesInfo().get(i));
+			}
+
 			jList.setListData(vcList);
 			scrollPane.add(jList);
+		} else if (e.getSource() == addBtn) {
+			
 		}
+
 		if (e.getSource() == insertPanel.getButton1()) {
 
 			dao.insert(insertPanel.getInputData1().getText(), insertPanel.getInputData2().getText(),
 					insertPanel.getInputData3().getText(), insertPanel.getInputData4().getText(),
 					insertPanel.getInputData5().getText());
 
+		}
+		if (e.getSource() == updatePanel.getButton1()) {
+			dao.update(updatePanel.getInputData1().getText(), updatePanel.getInputData2().getText(),
+					updatePanel.getInputData3().getText(), updatePanel.getInputData4().getText(),
+					updatePanel.getInputData5().getText());
+			System.out.println(updatePanel.getInputData1().getText());
 		}
 	}
 

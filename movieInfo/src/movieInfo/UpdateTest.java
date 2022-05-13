@@ -17,7 +17,7 @@ public class UpdateTest implements CallBack {
 		connection = dbClient.getConnection();
 		preparedStatement = null;
 		
-		updatePanel = new UpdatePanel(this);
+		updatePanel = new UpdatePanel();
 	}
 
 	@Override

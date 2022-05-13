@@ -10,8 +10,6 @@ import lombok.Data;
 @Data
 public class InsertPanel extends JPanel {
 
-	private CallBack callBack;
-
 	private JTextField inputData1;
 	private JTextField inputData2;
 	private JTextField inputData3;
@@ -82,9 +80,5 @@ public class InsertPanel extends JPanel {
 		add(label5);
 		add(button1);
 
-		setVisible(true);
 	}
-
-
-	
 }

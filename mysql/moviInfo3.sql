@@ -6,8 +6,9 @@ drop table person;
 drop table role;
 
 create table movieInfo(
-movieinfoNum int not null primary key,
-영화이름 varchar(30) not null
+movieinfoNum int not null auto_increment primary key,
+영화이름 varchar(30) not null,
+감독 varchar(30) not null
 );
 create table movieReleaseInfo(
 releaseNum int not null primary key,
@@ -18,14 +19,14 @@ foreign key(movieinfoNum) references movieINfo(movieinfoNum),
 );
 
 create table moviePlot(
-movieplotNum int not null primary key,
+movieplotNum int not null auto_increment primary key,
 movieinfoNum int not null unique,
 foreign key(movieinfoNum) references movieINfo(movieinfoNum),
 줄거리 varchar(500)
 );
 
 create table movieReport(
-reportNum int not null primary key,
+reportNum int not null auto_increment primary key,
 movieinfoNum int not null unique,
 foreign key(movieinfoNum) references movieINfo(movieinfoNum),
 매출액 int not null,
@@ -41,7 +42,7 @@ review3 varchar(500)
 -- actor : 배우
 -- staff : 배우외 제작진(감독 포함)
 create table personInfo(
-personNum int not null primary key,
+personNum int not null auto_increment primary key,
 이름 varchar(30) not null,
 주민등록성별 varchar(30) not null,
 출생년도 int,
@@ -50,20 +51,20 @@ personNum int not null primary key,
 배우자 varchar(30)
 );
 create table actorInfo(
-actorNum int not null primary key,
+actorNum int not null auto_increment primary key,
 personNum int not null unique,
 foreign key(personNum) references personInfo(personNum),
 대표작품 varchar(30), 
 대표역할 varchar(30)
 );
 create table staffInfo(
-staffNum int not null primary key,
+staffNum int not null auto_increment primary key,
 personNum int not null unique,
 foreign key(personNum) references personInfo(personNum),
 대표작품 varchar(30)
 );
 create table actorRole(
-actorroleNum int not null primary key,
+actorroleNum int not null auto_increment primary key,
 movieinfoNum int not null ,
 foreign key(movieinfoNum) references movieINfo(movieinfoNum),
 역할이름 varchar(30),
@@ -74,23 +75,23 @@ foreign key(actorNum) references actorINfo(actorNum)
 
 
 -- 1. movieInfo
-insert into movieInfo values(1,'기생충');
-insert into movieInfo values(2,'밀정');
-insert into movieInfo values(3,'괴물');
-insert into movieInfo values(4,'특송');
-insert into movieInfo values(5,'도둑들');
-insert into movieInfo values(6,'베를린');
-insert into movieInfo values(7,'서복');
+insert into movieInfo values(1,'기생충','봉준호');
+insert into movieInfo values(2,'밀정','김지운');
+insert into movieInfo values(3,'괴물','봉준호');
+insert into movieInfo values(4,'특송','박대민');
+insert into movieInfo values(5,'도둑들','최동훈');
+insert into movieInfo values(6,'베를린','류승완');
+insert into movieInfo values(7,'서복','이용주');
 select * from movieInfo;
 
 -- 2. movieReport --> report번호p, 영화번호f, 매출액, 관객수, 평점, 리뷰1, 리뷰2, 리뷰3
-insert into movieReport values(1, 1,00,10310000,9.07,'재밌었어요','충격적','와우강추'); -- 기생충
-insert into movieReport values(2, 2,00,7500000,8.57,'재밌었어요','충격적','와우강추'); -- 밀정
-insert into movieReport values(3, 3,00,10910000,8.62,'재밌었어요','충격적','와우강추'); -- 괴물
-insert into movieReport values(4, 4,00,440000,7.53,'재밌었어요','충격적','와우강추'); -- 특송
-insert into movieReport values(5, 5,00,12980000,7.64,'재밌었어요','충격적','와우강추'); -- 도둑들
-insert into movieReport values(6, 6,00,7160000,7.87,'재밌었어요','충격적','와우강추'); -- 베를린
-insert into movieReport values(7, 7,00,380000,8.21,'재밌었어요','충격적','와우강추'); -- 서복
+insert into movieReport values(1, 1,10310000,3000000,9.07,'재밌었어요1','충격적','와우강추'); -- 기생충
+insert into movieReport values(2, 2,7500000,4000000,8.57,'재밌었어요2','충격적','와우강추'); -- 밀정
+insert into movieReport values(3, 3,10910000,5000000,8.62,'재밌었어요3','충격적','와우강추'); -- 괴물
+insert into movieReport values(4, 4,440000,6000000,7.53,'재밌었어요4','충격적','와우강추'); -- 특송
+insert into movieReport values(5, 5,12980000,7000000,7.64,'재밌었어요5','충격적','와우강추'); -- 도둑들
+insert into movieReport values(6, 6,7160000,8000000,7.87,'재밌었어요6','충격적','와우강추'); -- 베를린
+insert into movieReport values(7, 7,380000,9000000,8.21,'재밌었어요7','충격적','와우강추'); -- 서복
 
 -- 3. movieReleaseInfo --> 개봉번호p, 영화번호f, 개봉연도, 개봉월
 insert into movieReleaseInfo values(1,1,2019,05);-- 기생충
@@ -113,7 +114,7 @@ select * from moviePlot;
 
 -- 5. personInfo --> personNum P, 이름, 주민등록성별, 출생년도, 키, 몸무게, 배우자
 insert into personInfo values(1,'이정재','남',1978,180.0,70.0,null);
-insert into personInfo values(2,'박소담','남',1995,165.2,45.0,null);
+insert into personInfo values(2,'박소담','여',1995,165.2,45.0,null);
 insert into personInfo values(3,'최우식','남',1996,180.0,60.0,null);
 insert into personInfo values(4,'송강호','남',1972,180.0,80.0,null); -- ---이름....
 insert into personInfo values(5,'조여정','여',1978,160.0,40.0,null);
@@ -198,3 +199,92 @@ insert into actorRole values(19,7,'서복',21);-- 서복 박보검
 insert into actorRole values(20,7,'민기헌',9);-- 서복 공유
 insert into actorRole values(21,7,'안부장',22);-- 서복 조우진
 select * from actorRole;
+
+desc movieinfo;
+show tables;
+
+
+
+
+
+-- <영화정보조회>
+-- 영화 정보 조회 view_movieInfoAll
+drop view view_movieInfoAll;
+create view view_movieInfoAll
+as select a.movieinfoNum, a.영화이름,a.감독, b.줄거리, c.매출액, c.관객수, c.평점, c.review1, c.review2, c.review3
+from movieinfo as a
+left join movieplot as b
+on a.movieinfoNum = b.movieinfoNum
+left join moviereport as c
+on a.movieinfoNum = c.movieinfoNum;
+
+select * from view_movieInfoAll;
+
+
+-- 영화별 줄거리 view_movieInfo_plot
+drop view view_movieInfo_plot;
+create view view_movieInfo_plot
+as select a.movieinfoNum, a.영화이름, b.줄거리
+from movieinfo as a
+inner join movieplot as b
+on a.movieinfoNum = b.movieinfoNum;
+
+select * from view_movieInfo_plot;
+
+-- 영화별 report view_movieInfo_report
+drop view view_movieInfo_report;
+create view view_movieInfo_report
+as select a.movieinfoNum, a.영화이름, b.매출액, b.관객수, b.평점, b.review1, b.review2, b.review3
+from movieinfo as a
+inner join moviereport as b
+on a.movieinfoNum = b.movieinfoNum;
+
+select * from view_movieInfo_report;
+
+-- 영화별 개봉정보조회 view_movieInfo_releaseinfo
+drop view view_movieInfo_releaseinfo;
+create view view_movieInfo_releaseinfo
+as select a.movieinfoNum, a.영화이름, b.개봉연도, b.개봉월
+from movieinfo as a
+inner join moviereleaseinfo as b
+on a.movieinfoNum = b.movieinfoNum;
+
+select * from view_movieInfo_releaseinfo;
+
+
+-- --------------------------
+-- <영화별 등장인물 조회>
+drop view view_movieRole;
+create view view_movieRole
+as select a.movieinfoNum, a.영화이름, b.역할이름, c.actorNum, d.이름
+from movieinfo as a
+right join actorrole as b
+on a.movieinfoNum = b.movieinfoNum
+left join actorinfo as c
+on b.actorNum = c.actorNum
+left join personinfo as d
+on c.personNum = d.personNum;
+
+select * from view_movieRole;
+-- <배우정보조회>
+drop view view_actorInfoAll;
+create view view_actorInfoAll
+as select a.actorNum, a.대표작품, a.대표역할, b.*
+from actorinfo as a
+left join personinfo as b
+on a.personNum = b.personNum;
+ 
+ select * from view_actorInfoAll;
+
+
+-- <staff정보조회>
+drop view view_staffInfoAll;
+create view view_staffInfoAll
+as select a.staffNum, a.대표작품, b.*
+from staffinfo as a
+left join personinfo as b
+on a.personNum = b.personNum;
+ 
+select * from view_staffInfoAll;
+
+

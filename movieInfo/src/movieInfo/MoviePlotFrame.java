@@ -26,7 +26,6 @@ public class MoviePlotFrame {
 	private void initData(MovieInfoDto dto) {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 481, 520);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setTitle("영화정보 상세보기");
 		

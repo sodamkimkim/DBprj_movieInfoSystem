@@ -6,6 +6,7 @@ public interface IMovieService {
 	Vector<MovieInfoDto> selectMovieTitle(String searchWord);
 	Vector<MovieInfoDto> selectAllMovieInfo();
 	void insertMovieInfo(MovieInfoDto dto);
-	void updateMovieInfo(int movieinfoNum, MovieInfoDto dto);
-	void deleteMovieInfo();
+	int updateMovieInfo(int movieinfoNum, MovieInfoDto dto);
+	int deleteMovieInfo(String movieTitle, String direntorName);
+	boolean selectMovieDoubleCheck(String movieTitle, String movieDirector);
 }

@@ -16,28 +16,26 @@ public class MovieInfoDao implements IMovieService {
 		dbClient = DBClient.getInstance("movieinfo");
 		connection = dbClient.getConnection();
 	}
-	
+
 	/**
-	 * SELECT - 영화이름
-	 * 영화이름을 입력하여 검색하면 
-	 * 영화이름과 일치하는 영화정보를 검색한다.
+	 * SELECT - 영화이름 영화이름을 입력하여 검색하면 영화이름과 일치하는 영화정보를 검색한다.
 	 */
 	@Override
 	public Vector<MovieInfoDto> selectMovieTitle(String searchWord) {
-		
+
 		Vector<MovieInfoDto> selectMovieTitleDtos = new Vector<>();
-		
+
 		try {
-			
+
 			String selectMovieTitleQuery = "SELECT * FROM view_movieInfoALL WHERE 영화이름 = ? ";
 			preparedStatement = connection.prepareStatement(selectMovieTitleQuery);
 			preparedStatement.setString(1, searchWord);
 			ResultSet resultSet = preparedStatement.executeQuery();
-			
+
 			while (resultSet.next()) {
-				
+
 				MovieInfoDto dto = new MovieInfoDto();
-				
+
 				dto.setMovieTitle(resultSet.getString("영화이름"));
 				dto.setDirectorName(resultSet.getString("감독"));
 				dto.setMoviePlot(resultSet.getString("줄거리"));
@@ -65,13 +63,13 @@ public class MovieInfoDao implements IMovieService {
 		Vector<MovieInfoDto> movieDtos = new Vector<>();
 
 		try {
-			
+
 			String empolyeesInfo = "SELECT * FROM view_movieInfoALL";
 			preparedStatement = connection.prepareStatement(empolyeesInfo);
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
-				
+
 				MovieInfoDto dto = new MovieInfoDto(resultSet.getInt("movieinfoNum"), resultSet.getString("영화이름"),
 						resultSet.getString("감독"), resultSet.getInt("개봉연도"), resultSet.getInt("개봉월"),
 						resultSet.getString("줄거리"), resultSet.getInt("매출액"), resultSet.getInt("관객수"),
@@ -87,13 +85,45 @@ public class MovieInfoDao implements IMovieService {
 //				dto.setReview1(resultSet.getString("review1"));
 //				dto.setReview2(resultSet.getString("review2"));
 //				dto.setReview3(resultSet.getString("review3"));
-				
+
 				movieDtos.add(dto);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return movieDtos;
+	}
+
+	/**
+	 * SELECT 영화정보 중복검사 INSERT, DELETE 기능 수행하기전 중복을 검사한다.
+	 */
+	@Override
+	public boolean selectMovieDoubleCheck(String movieTitle, String movieDirector) {
+
+		// 중복 체크변수
+		boolean doubleCheck = false;
+
+		try {
+			// 중복검사
+			String selectCheckQuery = "SELECT * FROM moviinfo WHERE 영화이름 = ? AND 감독 = ? ";
+			preparedStatement = connection.prepareStatement(selectCheckQuery);
+			preparedStatement.setString(1, movieTitle);
+			preparedStatement.setString(2, movieDirector);
+			ResultSet checkRs = preparedStatement.executeQuery();
+
+			while (checkRs.next()) {
+
+				String movieinfoNumCheck = checkRs.getString("movieinfoNum");
+
+				// 중복이 아니라면 INSERT
+				if (movieinfoNumCheck == null) {
+					doubleCheck = true;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return doubleCheck;
 	}
 
 	@Override
@@ -162,7 +192,10 @@ public class MovieInfoDao implements IMovieService {
 	}
 
 	@Override
-	public void updateMovieInfo(int movieinfoNum, MovieInfoDto dto) {
+	public int updateMovieInfo(int movieinfoNum, MovieInfoDto dto) {
+		
+		int result = -1;
+		
 		try {
 			// UPDATE
 			// 테이블 - movieInfo / 영화이름, 감독
@@ -171,7 +204,7 @@ public class MovieInfoDao implements IMovieService {
 			preparedStatement.setString(1, dto.getMovieTitle());
 			preparedStatement.setString(2, dto.getDirectorName());
 			preparedStatement.setInt(3, movieinfoNum);
-			int result = preparedStatement.executeUpdate();
+			result = preparedStatement.executeUpdate();
 			System.out.println(result);
 
 			// UPDATE
@@ -210,11 +243,39 @@ public class MovieInfoDao implements IMovieService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		return result;
 	}
 
 	@Override
-	public void deleteMovieInfo() {
-		// TODO Auto-generated method stub
+	public int deleteMovieInfo(String movieTitle, String direntorName) {
 		
+		int movieinfoNum = -1;
+		int result = -1;
+		try {
+			
+			// SELECT
+			// 선택한 영화가 몇번인지 
+			String selectQuery = "SELECT * FROM movieinfo WHERE 영화이름 = ? AND 감독 = ? ";
+			preparedStatement = connection.prepareStatement(selectQuery);
+			preparedStatement.setString(1, movieTitle);
+			preparedStatement.setString(2, direntorName);
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				movieinfoNum = rs.getInt("movieinfoNum");
+			}
+			
+			// DELETE
+			String deleteQuery = "DELETE FROM movieinfo WHERE movieinfoNum = ? ";
+			preparedStatement = connection.prepareStatement(deleteQuery);
+			preparedStatement.setInt(1, movieinfoNum);
+			result = preparedStatement.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 }

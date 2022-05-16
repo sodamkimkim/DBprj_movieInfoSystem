@@ -75,6 +75,7 @@ on delete cascade
 on update cascade,
 대표작품 varchar(30)
 );
+drop table actorRole;
 create table actorRole(
 actorroleNum int not null auto_increment primary key,
 movieinfoNum int not null ,
@@ -82,8 +83,10 @@ foreign key(movieinfoNum) references movieINfo(movieinfoNum)
 on delete cascade
 on update cascade,
 역할이름 varchar(30),
-actorNum int not null,
+actorNum int,
 foreign key(actorNum) references actorINfo(actorNum)
+on delete cascade
+on update cascade
 );
 
 
@@ -130,15 +133,6 @@ insert into moviePlot(movieinfoNum, 줄거리) values(5,'한 팀으로 활동 �
 insert into moviePlot(movieinfoNum, 줄거리) values(6,'거대한 국제적 음모가 숨겨진 운명의 도시 베를린. 그 곳에 상주하는 국정원 요원 정진수는 불법무기거래장소를 감찰하던 중 국적불명, 지문마저 감지되지 않는 일명 ‘고스트’ 비밀요원 표종성의 존재를 알게 된다. 그의 정체를 밝혀내기 위해 뒤를 쫓던 정진수는 그 배후에 숨겨진 엄청난 국제적 음모를 ... ');-- 베를린
 insert into moviePlot(movieinfoNum, 줄거리) values(7,'과거 트라우마를 안겨준 사건으로 인해 외부와 단절된 삶을 살아가고 있는 전직 요원 ‘기헌’은 정보국으로부터 거절할 수 없는 마지막 제안을 받는다. 줄기세포 복제와 유전자 조작을 통해 만들어진 실험체 ‘서복’을 안전하게 이동시키는 일을 맡게 된 것. 하지만 임무 수행과 동시에 예기치 못한 공격..');-- 서복
 select * from moviePlot;
-desc movieplot;
-
-update moviePlot set 줄거리 = '전원백수로 살 길 막막하지만 사이는 좋은 기택(송강호) 가족. 장남 기우(최우식)에게 명문대생 친구가 연결시켜 준 고액 과외 자리는 모처럼 싹튼 고정수입의 희망이다. 온 가족의 도움과 기대 속에 박사장(이선균) 집으로 향하는 기우. 글로벌 IT기업 CEO인 박사장의 저택에 도착하자 젊고 아름다운 사모님 연교(조여정)가 기우를 맞이한다. 그러나 이렇게 시작된 두 가족의 만남 뒤로, 걷잡을 수 없는 사건이 기다리고 있었으니…' where movieinfoNum = 1;
-update moviePlot set 줄거리 = '1920년대 일제강점기. 조선인 출신 일본경찰 이정출(송강호)은 무장독립운동 단체 의열단의 뒤를 캐라는 특명으로 의열단의 리더 김우진(공유)에게 접근하고, 한 시대의 양 극단에 서 있는 두 사람은 서로의 정체와 의도를 알면서도 속내를 감춘 채 가까워진다. 출처를 알 수 없는 정보가 쌍방간에 새어나가고 누가 밀정인지 알 수 없는 가운데, 의열단은 일제의 주요 시설을 파괴할 폭탄을 경성으로 들여오기 위해, 그리고 일본 경찰은 그들을 쫓아 모두 상해에 모인다. 잡아야만 하는 자들과 잡힐 수 없는 자들 사이, 자신의 목표를 위해 서로를 이용하려는 암투와 회유, 교란 작전이 숨가쁘게 펼쳐지는 긴장감 속에서 폭탄을 실은 열차는 국경을 넘어 경성으로 향하는데…' where movieinfoNum = 2;
-update moviePlot set 줄거리 = '햇살 가득한 평화로운 한강 둔치 아버지(변희봉)가 운영하는 한강 매점, 늘어지게 낮잠 자던 강두(송강호)는 잠결에 들리는 ‘아빠’라는 소리에 벌떡 일어난다. 올해 중학생이 된 딸 현서(고아성)가 잔뜩 화가 나있다. 꺼내놓기도 창피한 오래된 핸드폰과, 학부모 참관 수업에 술 냄새 풍기며 온 삼촌(박해일)때문이다. 강두는 고민 끝에 비밀리에 모아 온 동전이 가득 담긴 컵라면 그릇을 꺼내 보인다. 그러나 현서는 시큰둥할 뿐, 막 시작된 고모(배두나)의 전국체전 양궁경기에 몰두해 버린다. 그곳에서 괴물이 나타났다. 생전 보도 못한 무언가가 한강다리에 매달려 움직이는 것이다. 사람들은 마냥 신기해하며 핸드폰, 디카로 정신 없이 찍어댄다. 그러나 그것도 잠시… 정체를 알 수 없는 괴물은 둔치 위로 올라와 사람들을 거침없이 깔아뭉개고, 무차별로 물어뜯기 시작한다. ' where movieinfoNum = 3;
-update moviePlot set 줄거리 = '예상치 못한 배송사고로 걷잡을 수 없는 사건에 휘말린 특송 전문 드라이버 ‘은하’. 어쩌다 맡게 된 반송 불가 수하물에 출처를 알 수 없는 300억까지! 경찰과 국정원의 타겟이 되어 도심 한복판 모든 것을 건 추격전을 벌이게 되는데… NO브레이크! FULL엑셀! 성공률 100% 특송 전문 드라이버가 온다!' where movieinfoNum = 4;
-update moviePlot set 줄거리 = '한 팀으로 활동 중인 한국의 도둑 뽀빠이와 예니콜, 씹던껌, 잠파노. 미술관을 터는데 멋지게 성공한 이들은 뽀빠이의 과거 파트너였던 마카오박이 제안한 홍콩에서의 새로운 계획을 듣게 된다. 여기에 마카오박이 초대하지 않은 손님, 감옥에서 막 출소한 금고털이 팹시가 합류하고 5명은 각자 인생 최고의 반전을 꿈꾸며 홍콩으로 향한다. 홍콩에서 한국 도둑들을 기다리고 있는 4인조 중국도둑 첸, 앤드류, 쥴리, 조니. 최고의 전문가들이 세팅된 가운데 서로에 대한 경계를 늦추지 않는 한국과 중국의 도둑들. 팽팽히 흐르는 긴장감 속에 나타난 마카오박은 자신이 계획한 목표물을 밝힌다. 그것은 마카오 카지노에 숨겨진 희대의 다이아몬드 <태양의 눈물>. 성공을 장담할 수 없는 위험천만한 계획이지만 2천만 달러의 달콤한 제안을 거부할 수 없는 이들은 태양의 눈물을 훔치기 위한 작업에 착수한다. 그러나 진짜 의도를 알 수 없는 비밀스런...' where movieinfoNum = 5;
-update moviePlot set 줄거리 = '거대한 국제적 음모가 숨겨진 운명의 도시 베를린. 그 곳에 상주하는 국정원 요원 정진수는 불법무기거래장소를 감찰하던 중 국적불명, 지문마저 감지되지 않는 일명 ‘고스트’ 비밀요원 표종성의 존재를 알게 된다. 그의 정체를 밝혀내기 위해 뒤를 쫓던 정진수는 그 배후에 숨겨진 엄청난 국제적 음모를 알게 되면서 걷잡을 수 없는 위기에 빠진다. 한편 표종성을 제거하고 베를린을 장악하기 위해 파견된 동명수는 그의 아내 연정희를 반역자로 몰아가며 이를 빌미로 숨통을 조이고, 표종성의 모든 것에 위협을 가한다. 표종성은 동명수의 협박 속에서 연정희의 무죄를 증명하기 위해서 그녀를 미행하게 되지만, 예상치 못한 아내의 비밀을 알게 되면서 혼란에 휩싸이게 되는데... 국제적 음모와 각자의 목적에 휘말려 서로를 쫓는 이들의 숨막히는 추격전! 2013년, 초대형 액션 프로젝트가 펼쳐진다!' where movieinfoNum = 6;
-update moviePlot set 줄거리 = '과거 트라우마를 안겨준 사건으로 인해 외부와 단절된 삶을 살아가고 있는 전직 요원 ‘기헌’은 정보국으로부터 거절할 수 없는 마지막 제안을 받는다. 줄기세포 복제와 유전자 조작을 통해 만들어진 실험체 ‘서복’을 안전하게 이동시키는 일을 맡게 된 것. 하지만 임무 수행과 동시에 예기치 못한 공격을 받게 되고, 가까스로 빠져나온 ‘기헌’과 ‘서복‘은 둘만의 특별한 동행을 시작하게 된다. 실험실 밖 세상을 처음 만나 모든 것이 신기하기만 한 ‘서복‘과 생애 마지막 임무를 서둘러 마무리 짓고 싶은 ‘기헌’은 가는 곳마다 사사건건 부딪친다. 한편, 인류의 구원이자 재앙이 될 수도 있는 ‘서복’을 차지하기 위해 나선 여러 집단의 추적은 점점 거세지고 이들은 결국 피할 수 없는 선택을 하게 되는데…' where movieinfoNum = 7;
 
 -- 5. personInfo --> personNum P, 이름, 주민등록성별, 출생년도, 키, 몸무게, 배우자
 insert into personInfo(이름, 주민등록성별, 출생년도, 키, 몸무게, 배우자) values('이정재','남',1978,180.0,70.0,null);
@@ -239,26 +233,18 @@ show tables;
 
 -- <영화정보조회>
 -- 영화 정보 조회 view_movieInfoAll
--- drop view view_movieInfoAll;
--- create view view_movieInfoAll
--- as select a.movieinfoNum, a.영화이름,a.감독, b.줄거리, c.매출액, c.관객수, c.평점, c.review1, c.review2, c.review3
--- from movieinfo as a
--- left join movieplot as b
--- on a.movieinfoNum = b.movieinfoNum
--- left join moviereport as c
--- on a.movieinfoNum = c.movieinfoNum;
-
-select * from view_movieInfoAll;
-
-CREATE VIEW view_movieInfoAll
-AS SELECT a.movieinfoNum, a.영화이름,a.감독, d.개봉연도, d.개봉월, b.줄거리, c.매출액, c.관객수, c.평점, c.review1, c.review2, c.review3
-FROM movieinfo AS a
-LEFT JOIN movieplot AS b
-ON a.movieinfoNum = b.movieinfoNum
-LEFT JOIN moviereport AS c
-ON a.movieinfoNum = c.movieinfoNum
+drop view view_movieInfoAll;
+create view view_movieInfoAll
+as select a.movieinfoNum, a.영화이름,a.감독, d.개봉연도, d.개봉월, b.줄거리, c.매출액, c.관객수, c.평점, c.review1, c.review2, c.review3
+from movieinfo as a
+left join movieplot as b
+on a.movieinfoNum = b.movieinfoNum
+left join moviereport as c
+on a.movieinfoNum = c.movieinfoNum
 left join moviereleaseinfo as d
 on a.movieinfoNum = d.movieinfoNum;
+
+select * from view_movieInfoAll;
 
 
 -- 영화별 줄거리 view_movieInfo_plot
@@ -326,3 +312,15 @@ left join personinfo as b
 on a.personNum = b.personNum;
  
 select * from view_staffInfoAll;
+
+-- staff핵심정보만
+drop view view_staffInfo;
+create view view_staffInfo
+as select b.staffNum, a.personNum, a.이름, b.대표작품, a.주민등록성별, a.출생년도, a.배우자
+from personinfo as a
+right join staffinfo as b
+on a.personNum=b.personNum; 
+
+select * from view_staffInfo;
+desc view_staffInfo;
+select * from view_movieInfoALL;

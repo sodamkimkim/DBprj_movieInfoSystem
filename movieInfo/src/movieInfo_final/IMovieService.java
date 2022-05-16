@@ -1,4 +1,4 @@
-package movieInfo;
+package movieInfo_final;
 
 import java.util.Vector;
 

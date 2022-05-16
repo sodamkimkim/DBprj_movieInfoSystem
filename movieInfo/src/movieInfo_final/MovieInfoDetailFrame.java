@@ -1,4 +1,4 @@
-package movieInfo;
+package movieInfo_final;
 
 import java.awt.Color;
 
@@ -10,7 +10,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
-public class MoviePlotFrame {
+public class MovieInfoDetailFrame {
 
 	private JFrame frame;
 	private JTextField fldMovieTitle;
@@ -19,7 +19,7 @@ public class MoviePlotFrame {
 	private JTextField fldReview2;
 	private JTextField fldReview3;
 
-	public MoviePlotFrame(MovieInfoDto dto) {
+	public MovieInfoDetailFrame(MovieInfoDto dto) {
 		initData(dto);
 	}
 

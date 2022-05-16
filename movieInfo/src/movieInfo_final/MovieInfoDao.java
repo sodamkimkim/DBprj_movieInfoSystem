@@ -1,4 +1,4 @@
-package movieInfo;
+package movieInfo_final;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

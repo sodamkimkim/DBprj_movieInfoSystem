@@ -89,9 +89,26 @@ public class StaffInfoDao implements IStaffService {
 			int result = preparedStatement.executeUpdate();
 			System.out.println(result);
 			
-			insertQuery = "insert into staffInfo(personNum, 대표작품) values(?,?) ";
+			
+			// SELECT
+			// movieinfoNum을 조회하기 위함.
+			String selectQuery = "SELECT * FROM personInfo WHERE 이름 = ? AND 출생년도 = ?";
+			preparedStatement = connection.prepareStatement(selectQuery);
+			preparedStatement.setString(1, dto.getDirectorName());
+			preparedStatement.setInt(2, dto.getBirthYear());
+			ResultSet resultSet = preparedStatement.executeQuery();
+			int personNum = 0;
+			while (resultSet.next()) {
+				personNum = resultSet.getInt("personNum");
+				System.out.println(personNum);// "movieinfoNum"
+			}
+
+			
+			
+			
+			insertQuery = "insert into staffInfo(personNum,대표작품) values(?,?) ";
 			preparedStatement = connection.prepareStatement(insertQuery);
-			preparedStatement.setInt(1, dto.getPersonNum());
+			preparedStatement.setInt(1,personNum);
 			preparedStatement.setString(2,dto.getRepresentativeWork());
 			 result = preparedStatement.executeUpdate();
 			System.out.println(result);
@@ -117,7 +134,7 @@ public class StaffInfoDao implements IStaffService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		updateQuery = "UPDATE staffinfo SET 대표작품 = ? where staffInfoNum = ?";
+		updateQuery = "UPDATE staffinfo SET 대표작품 = ? where staffInfoNum = ? ";
 		try {
 			preparedStatement = connection.prepareStatement(updateQuery);
 			preparedStatement.setString(1, dto.getRepresentativeWork());
@@ -137,26 +154,30 @@ public class StaffInfoDao implements IStaffService {
 	 * SELECT staff 중복검사 INSERT, DELETE 기능 수행하기전 중복을 검사한다.
 	 */
 	@Override
-	public boolean selectStaffInfoDoubleCheck(String name) {
+	public boolean selectStaffInfoDoubleCheck(String directorName, int birthYear) {
 
 		// 중복 체크변수
 		boolean doubleCheck = false;
 
 		try {
 			// 중복검사
-			String selectCheckQuery = "SELECT * FROM view_staffinfoall WHERE 이름 = ? ";
+			String selectCheckQuery = "SELECT * FROM view_staffinfoall WHERE 이름 = ? and 출생년도 = ?";
 			preparedStatement = connection.prepareStatement(selectCheckQuery);
-			preparedStatement.setString(1, name);
+			preparedStatement.setString(1, directorName);
+			preparedStatement.setInt(2, birthYear);
 
 			ResultSet checkRs = preparedStatement.executeQuery();
+			String staffInfoNumCheck = "";
 			while (checkRs.next()) {
 
-				String staffInfoNumCheck = checkRs.getString("staffNum");
-
-				// 중복이 아니라면 INSERT
-				if (staffInfoNumCheck == null) {
-					doubleCheck = true;
-				}
+			 staffInfoNumCheck = checkRs.getString("staffNum");
+			}
+			System.out.println("test");
+			
+			// 중복이 아니라면 INSERT
+			if (staffInfoNumCheck == "") {
+				doubleCheck = true;
+				System.out.println(doubleCheck);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -165,22 +186,22 @@ public class StaffInfoDao implements IStaffService {
 	}
 	
 	@Override
-	public int deleteStaffInfo(int personNum) {
+	public int deleteStaffInfo(int staffInfoNum) {
 		
 		int staffNum = -1;
 		int result = -1;
 		try {
 			
-			// SELECT
-			// 선택한 staff가 몇번인지 
-			String selectQuery = "SELECT * FROM staffinfo WHERE personNum = ? ";
-			preparedStatement = connection.prepareStatement(selectQuery);
-			preparedStatement.setInt(1, personNum);
-			ResultSet rs = preparedStatement.executeQuery();
-
-			while (rs.next()) {
-				staffNum = rs.getInt("staffNum");
-			}
+//			// SELECT
+//			// 선택한 staff가 몇번인지 
+//			String selectQuery = "SELECT * FROM staffinfo WHERE staffNum = ? ";
+//			preparedStatement = connection.prepareStatement(selectQuery);
+//			preparedStatement.setInt(1, staffInfoNum);
+//			ResultSet rs = preparedStatement.executeQuery();
+//
+//			while (rs.next()) {
+//				staffNum = rs.getInt("staffNum");
+//			}
 			
 			// DELETE
 			String deleteQuery = "DELETE FROM staffinfo WHERE staffNum = ? ";

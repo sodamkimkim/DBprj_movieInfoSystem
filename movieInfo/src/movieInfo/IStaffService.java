@@ -12,8 +12,8 @@ public interface IStaffService {
 	int updateStaffInfo(int staffInfoNum, StaffInfoDto dto);
 
 
-	boolean selectStaffInfoDoubleCheck(String name);
+	boolean selectStaffInfoDoubleCheck(String directorName, int birthYear);
 
-	int deleteStaffInfo(int personNum);
+	int deleteStaffInfo(int staffInfoNum);
 
 }

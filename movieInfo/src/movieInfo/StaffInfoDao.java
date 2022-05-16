@@ -175,12 +175,13 @@ public class StaffInfoDao implements IStaffService {
 			
 			// 중복이 아니라면 INSERT
 			if (staffInfoNumCheck == "") {
-				doubleCheck = true;
+				doubleCheck = true; //
 				System.out.println(doubleCheck);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		System.out.println(doubleCheck); //false뜨네
 		return doubleCheck;
 	}
 	
@@ -204,6 +205,7 @@ public class StaffInfoDao implements IStaffService {
 			
 			// DELETE
 			String deleteQuery = "DELETE FROM staffinfo WHERE staffNum = ? ";
+			System.out.println(staffInfoNum);
 			preparedStatement = connection.prepareStatement(deleteQuery);
 			preparedStatement.setInt(1, staffNum);
 			result = preparedStatement.executeUpdate();

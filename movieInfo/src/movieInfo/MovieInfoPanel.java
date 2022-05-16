@@ -1,5 +1,7 @@
 package movieInfo;
 
+import java.awt.Color;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -100,6 +102,7 @@ public class MovieInfoPanel extends JPanel {
 		
 		lblMoviePlot.setBounds(130, 360, 50, 20);
 		fldMoviePlot.setBounds(130, 380, 540, 125);
+		fldMoviePlot.setLineWrap(true);
 		
 		lblReview1.setBounds(130, 535, 50, 20);
 		fldReview1.setBounds(130, 555, 540, 25);
@@ -111,7 +114,9 @@ public class MovieInfoPanel extends JPanel {
 		fldReview3.setBounds(130, 695, 540, 25);
 		
 		btnInsertMovieInfo.setBounds(400, 30, 140, 30);
+		btnInsertMovieInfo.setBackground(Color.WHITE);
 		btnUpdateMovieInfo.setBounds(560, 30, 140, 30);
+		btnUpdateMovieInfo.setBackground(Color.WHITE);
 
 		add(fldMovieTitle);
 		add(fldDirectorName);

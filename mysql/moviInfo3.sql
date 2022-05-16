@@ -310,3 +310,13 @@ left join personinfo as b
 on a.personNum = b.personNum;
  
 select * from view_staffInfoAll;
+
+-- staff핵심정보만
+drop view view_staffInfo;
+create view view_staffInfo
+as select b.staffNum, a.personNum, a.이름, b.대표작품, a.주민등록성별, a.출생년도, a.배우자
+from personinfo as a
+right join staffinfo as b
+on a.personNum=b.personNum; 
+
+select * from view_staffInfo;

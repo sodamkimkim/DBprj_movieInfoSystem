@@ -102,10 +102,7 @@ public class StaffInfoDao implements IStaffService {
 				personNum = resultSet.getInt("personNum");
 				System.out.println(personNum);// "movieinfoNum"
 			}
-
-			
-			
-			
+	
 			insertQuery = "insert into staffInfo(personNum,대표작품) values(?,?) ";
 			preparedStatement = connection.prepareStatement(insertQuery);
 			preparedStatement.setInt(1,personNum);
@@ -120,7 +117,8 @@ public class StaffInfoDao implements IStaffService {
 
 	@Override
 	public int updateStaffInfo(int staffInfoNum, StaffInfoDto dto) {
-		String updateQuery = "UPDATE personinfo SET 이름 = ? , 주민등록성별 = ?, 출생년도=?, 배우자=? WHERE staffInfoNum = ? ";
+		System.out.println("staffInfoNum : "+staffInfoNum);
+		String updateQuery = "UPDATE personinfo SET 이름 = ? , 주민등록성별 = ?, 출생년도=?, 배우자=? WHERE personNum = ? ";
 		int result=-1;
 		try {
 			preparedStatement = connection.prepareStatement(updateQuery);
@@ -128,22 +126,23 @@ public class StaffInfoDao implements IStaffService {
 			preparedStatement.setString(2,dto.getGender());
 			preparedStatement.setInt(3, dto.getBirthYear());
 			preparedStatement.setString(4, dto.getMarriagePartner());
-			preparedStatement.setInt(5, staffInfoNum);
+			preparedStatement.setInt(5, dto.getPersonNum());
 			result = preparedStatement.executeUpdate();
-			System.out.println(result);
+			System.out.println("result : "+result);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		updateQuery = "UPDATE staffinfo SET 대표작품 = ? where staffInfoNum = ? ";
+		updateQuery = "UPDATE staffinfo SET 대표작품 = ? where staffNum = ? ";
 		try {
 			preparedStatement = connection.prepareStatement(updateQuery);
 			preparedStatement.setString(1, dto.getRepresentativeWork());
 			preparedStatement.setInt(2, staffInfoNum);
 			result = preparedStatement.executeUpdate();
-		System.out.println(result);
+		System.out.println("result : "+result);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		System.out.println("result: " + result);
 		return result;
 
 	}

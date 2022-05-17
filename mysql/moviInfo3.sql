@@ -235,22 +235,12 @@ show tables;
 -- 영화 정보 조회 view_movieInfoAll
 drop view view_movieInfoAll;
 create view view_movieInfoAll
-<<<<<<< HEAD
-as select a.movieinfoNum, a.영화이름,a.감독, d.개봉연도, d.개봉월, b.줄거리, c.매출액, c.관객수, c.평점, c.review1, c.review2, c.review3
-=======
 as select a.movieinfoNum, a.영화이름,a.감독, b.줄거리, c.매출액, c.관객수, c.평점, c.review1, c.review2, c.review3
->>>>>>> 46cf3a3b5874106eb95b35fd33b5c674242ef352
 from movieinfo as a
 left join movieplot as b
 on a.movieinfoNum = b.movieinfoNum
 left join moviereport as c
-<<<<<<< HEAD
-on a.movieinfoNum = c.movieinfoNum
-left join moviereleaseinfo as d
-on a.movieinfoNum = d.movieinfoNum;
-=======
 on a.movieinfoNum = c.movieinfoNum;
->>>>>>> 46cf3a3b5874106eb95b35fd33b5c674242ef352
 
 select * from view_movieInfoAll;
 
@@ -329,10 +319,4 @@ from personinfo as a
 right join staffinfo as b
 on a.personNum=b.personNum; 
 
-<<<<<<< HEAD
 select * from view_staffInfo;
-desc view_staffInfo;
-select * from view_movieInfoALL;
-=======
-select * from view_staffInfo;
->>>>>>> 46cf3a3b5874106eb95b35fd33b5c674242ef352

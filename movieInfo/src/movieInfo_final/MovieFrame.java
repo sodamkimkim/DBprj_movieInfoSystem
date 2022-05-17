@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.Field;
@@ -278,6 +280,7 @@ public class MovieFrame extends JFrame implements ActionListener {
 
 	private void addEventlistener() {
 		// 영화정보 관련 이벤트
+
 		btnMovieSearch.addActionListener(this);
 		btnAllMovieSearch.addActionListener(this);
 		btnInsertMovie.addActionListener(this);
@@ -285,13 +288,30 @@ public class MovieFrame extends JFrame implements ActionListener {
 		btnDeleteMovie.addActionListener(this);
 		movieInfoPanel.getBtnInsertMovieInfo().addActionListener(this);
 		movieInfoPanel.getBtnUpdateMovieInfo().addActionListener(this);
-		fldSearchMovie.addMouseListener(new MouseAdapter() {
+//		fldSearchMovie.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//				super.mouseClicked(e);
+//				if (fldSearchMovie.getText().equals("영화 이름 검색")) {
+//					fldSearchMovie.setText(null);
+//				}
+//			}
+//		});
+		fldSearchMovie.addFocusListener(new FocusAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				super.mouseClicked(e);
+			public void focusGained(FocusEvent e) {
 				if (fldSearchMovie.getText().equals("영화 이름 검색")) {
 					fldSearchMovie.setText(null);
 				}
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+
+				if (fldSearchMovie.getText().equals(null)) {
+					fldSearchMovie.setText("영화 이름 검색");
+				}
+
 			}
 		});
 		movieInfoList.addMouseListener(new MouseAdapter() {
@@ -314,12 +334,28 @@ public class MovieFrame extends JFrame implements ActionListener {
 		btnInsertActor.addActionListener(this);
 		actorInfoPanel.getBtnInsertActorInfo().addActionListener(this);
 		actorInfoPanel.getBtnUpdateActorInfo().addActionListener(this);
-		fldSearchActor.addMouseListener(new MouseAdapter() {
+//		fldSearchActor.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//				super.mouseClicked(e);
+//				if (fldSearchActor.getText().equals("배우 이름 검색")) {
+//					fldSearchActor.setText(null);
+//				}
+//			}
+//		});
+		fldSearchActor.addFocusListener(new FocusAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				super.mouseClicked(e);
+			public void focusGained(FocusEvent e) {
 				if (fldSearchActor.getText().equals("배우 이름 검색")) {
 					fldSearchActor.setText(null);
+				}
+
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (fldSearchMovie.getText().equals(null)) {
+					fldSearchMovie.setText("배우 이름 검색");
 				}
 			}
 		});
@@ -345,12 +381,28 @@ public class MovieFrame extends JFrame implements ActionListener {
 		btnInsertStaff.addActionListener(this);
 		staffInfoPanel.getBtnUpdateStaffInfo().addActionListener(this);
 		staffInfoPanel.getBtnInsertStaffInfo().addActionListener(this);
-		fldSearchStaff.addMouseListener(new MouseAdapter() {
+//		fldSearchStaff.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//				super.mouseClicked(e);
+//				if (fldSearchStaff.getText().equals("스태프 이름 검색")) {
+//					fldSearchStaff.setText(null);
+//				}
+//			}
+//		});
+		fldSearchStaff.addFocusListener(new FocusAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				super.mouseClicked(e);
+			public void focusGained(FocusEvent e) {
 				if (fldSearchStaff.getText().equals("스태프 이름 검색")) {
 					fldSearchStaff.setText(null);
+				}
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+
+				if (fldSearchMovie.getText().equals(null)) {
+					fldSearchMovie.setText("스태프 이름 검색");
 				}
 			}
 		});
@@ -729,9 +781,11 @@ public class MovieFrame extends JFrame implements ActionListener {
 		// ActorInfoPanel - 배우정보 등록하기 버튼
 		else if (e.getSource() == actorInfoPanel.getBtnInsertActorInfo()) {
 
-			if (!actorInfoPanel.getFldActorName().getText().equals("") && !actorInfoPanel.getFldActorGender().getText().equals("")
-					 && !actorInfoPanel.getFldActorBirthYear().getText().equals("")  && !actorInfoPanel.getFldatorTall().getText().equals("")
-					 && !actorInfoPanel.getFldActorWieght().getText().equals("")) {
+			if (!actorInfoPanel.getFldActorName().getText().equals("")
+					&& !actorInfoPanel.getFldActorGender().getText().equals("")
+					&& !actorInfoPanel.getFldActorBirthYear().getText().equals("")
+					&& !actorInfoPanel.getFldatorTall().getText().equals("")
+					&& !actorInfoPanel.getFldActorWieght().getText().equals("")) {
 
 				boolean doubleCheck = actorDao.selectActorDoubleCheck(actorInfoPanel.getFldActorName().getText());
 
@@ -762,10 +816,9 @@ public class MovieFrame extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(null, "입력하신 정보의 감독이 이미 존재합니다.", "ERROR", JOptionPane.ERROR_MESSAGE);
 				}
 			} else {
-				
+
 				System.out.println("배우 이름을 입력해주세요");
-				JOptionPane.showMessageDialog(null, "배우 이름을 입력해주세요", "ERROR",
-						JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "배우 이름을 입력해주세요", "ERROR", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 
@@ -934,7 +987,7 @@ public class MovieFrame extends JFrame implements ActionListener {
 					&& !staffInfoPanel.getFldGender().getText().equals("")
 					&& !staffInfoPanel.getFldMarriagePartner().getText().equals("")
 					&& !staffInfoPanel.getFldRepresentativeWork().getText().equals("")) {
-				
+
 				boolean doubleCheck = staffDao.selectStaffInfoDoubleCheck(staffInfoPanel.getFldDirectorName().getText(),
 						Integer.parseInt(staffInfoPanel.getFldBirthYear().getText()));
 
@@ -955,9 +1008,9 @@ public class MovieFrame extends JFrame implements ActionListener {
 					System.out.println("입력하신 감독정보가 이미 존재합니다.");
 					JOptionPane.showMessageDialog(null, "입력하신 감독정보가 이미 존재합니다.", "ERROR", JOptionPane.ERROR_MESSAGE);
 				}
-				
+
 			} else {
-				
+
 				System.out.println("빈칸을 전부 입력해주세요");
 				JOptionPane.showMessageDialog(null, "빈칸을 전부 입력해주세요", "ERROR", JOptionPane.ERROR_MESSAGE);
 			}
@@ -989,12 +1042,12 @@ public class MovieFrame extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(null, "업데이트가 정상적으로 처리되지 않았습니다", "ERROR", JOptionPane.ERROR_MESSAGE);
 
 				}
-				
+
 			} else {
-				
+
 				System.out.println("빈칸을 전부 입력해주세요");
 				JOptionPane.showMessageDialog(null, "빈칸을 전부 입력해주세요", "ERROR", JOptionPane.ERROR_MESSAGE);
-				
+
 			}
 		}
 	}

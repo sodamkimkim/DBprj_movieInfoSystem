@@ -14,10 +14,25 @@ DB Connect 를 활용한 영화 정보 관리 시스템입니다.
 SELECT, CREATE, UPDATE, DELETE 기능을 구현
 
 ## **기술**
+# Skills
 <br>
-<img src="https://img.shields.io/badge/JAVA-007396?style=for-the-badge&logo=JAVA&logoColor=white%22%3E
+
+### Back-End
+<img src="https://img.shields.io/badge/JAVA-007396?style=for-the-badge&logo=JAVA&logoColor=white%22%3E <img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=white%22%3E <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white"> <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=for-the-badge&logo=Spring Security&logoColor=white">
+
+<img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=Android&logoColor=white%22%3E <img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=Flutter&logoColor=white%22%3E <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black%22%3E <img src="https://img.shields.io/badge/jquery-0769AD?style=for-the-badge&logo=jquery&logoColor=white%22%3E
+<br>
+
+### Front-End
+<img src="https://img.shields.io/badge/html-E34F26?style=for-the-badge&logo=html5&logoColor=white%22%3E <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white%22%3E <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=Bootstrap&logoColor=white%22%3E
+<br>
+
+### DataBase
 <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white%22%3E
-/>
+
+### Collaboration
+<img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white%22%3E <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=Git&logoColor=white%22%3E <img src="https://img.shields.io/badge/Trello-0052CC?style=for-the-badge&logo=Trello&logoColor=white%22%3E
+<br><br><br><br><br>
 > JAVA SWING 을 이용한 화면 랜더링
 > 
 > 

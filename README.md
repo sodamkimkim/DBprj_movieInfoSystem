@@ -1,9 +1,9 @@
 # DB Connect 영화 정보관리 시스템
+![Honeycam 2022-07-28 23-11-39](https://user-images.githubusercontent.com/102580800/181531390-0ca4f8fc-7891-4e01-a98c-09d779caaa79.gif)
+![Honeycam 2022-07-28 23-12-55](https://user-images.githubusercontent.com/102580800/181531436-ec5f1c65-5fbd-4cbe-9d82-b413e24c3145.gif)
+![Honeycam 2022-07-28 23-14-39](https://user-images.githubusercontent.com/102580800/181531467-c2d00e0a-a946-4ce7-a366-4f9da50d672d.gif)
+![Honeycam 2022-07-28 23-15-27](https://user-images.githubusercontent.com/102580800/181531818-f91eed78-5072-43e4-9904-b9b68387aecf.gif)
 
-![dbconnect](https://user-images.githubusercontent.com/102580800/181467742-6402a969-6490-40ae-a1e9-d71c95aa99b5.png)
-![dbdetail](https://user-images.githubusercontent.com/102580800/181467773-e6d618ab-1bd8-430d-a56a-f4b343c5a155.png)
-![dbsave](https://user-images.githubusercontent.com/102580800/181467792-b1fe206c-1448-4392-a21d-97a95eb18b9b.png)
-![dbupdate](https://user-images.githubusercontent.com/102580800/181467802-df8e0a8f-3f58-4d22-aa47-90e1716417b0.png)
 
 DB Connect 를 활용한 영화 정보 관리 시스템입니다.
 

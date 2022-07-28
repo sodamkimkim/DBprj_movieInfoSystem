@@ -1,6 +1,6 @@
 # DB Connect 영화 정보관리 시스템
-![Honeycam 2022-07-28 23-11-39](https://user-images.githubusercontent.com/102580800/181531390-0ca4f8fc-7891-4e01-a98c-09d779caaa79.gif)
-![Honeycam 2022-07-28 23-12-55](https://user-images.githubusercontent.com/102580800/181531436-ec5f1c65-5fbd-4cbe-9d82-b413e24c3145.gif)
+![Honeycam 2022-07-28 23-17-29](https://user-images.githubusercontent.com/102580800/181536436-f8646c23-c48c-42f7-909b-e4fdc6a4fe40.gif)
+![Honeycam 2022-07-28 23-18-19](https://user-images.githubusercontent.com/102580800/181536495-652451b8-c462-4000-9e67-97f445cb1022.gif)
 ![Honeycam 2022-07-28 23-14-39](https://user-images.githubusercontent.com/102580800/181531467-c2d00e0a-a946-4ce7-a366-4f9da50d672d.gif)
 ![Honeycam 2022-07-28 23-15-27](https://user-images.githubusercontent.com/102580800/181531818-f91eed78-5072-43e4-9904-b9b68387aecf.gif)
 

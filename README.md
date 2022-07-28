@@ -4,4 +4,28 @@
 ![dbdetail](https://user-images.githubusercontent.com/102580800/181467773-e6d618ab-1bd8-430d-a56a-f4b343c5a155.png)
 ![dbsave](https://user-images.githubusercontent.com/102580800/181467792-b1fe206c-1448-4392-a21d-97a95eb18b9b.png)
 ![dbupdate](https://user-images.githubusercontent.com/102580800/181467802-df8e0a8f-3f58-4d22-aa47-90e1716417b0.png)
-![dbconnect](https://user-images.githubusercontent.com/102580800/181467811-83e731c3-22ea-41bd-97fb-a0164c0e38a0.png)
+
+DB Connect 를 활용한 영화 정보 관리 시스템입니다.
+
+## **기능**
+
+버튼을 이용한 DATA CRUD
+
+SELECT, CREATE, UPDATE, DELETE 기능을 구현
+
+## **기술**
+
+> JAVA SWING 을 이용한 화면 랜더링
+> 
+> 
+> Dto, Dao, Service 설계
+> 
+> DB Table 연관 관계 설정
+> 
+> Query문을 통한 DB 조작
+> 
+
+## **구현 언어**
+
+> JAVA-SWING, My SQL
+>

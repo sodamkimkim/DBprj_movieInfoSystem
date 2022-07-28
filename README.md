@@ -14,11 +14,10 @@ DB Connect 를 활용한 영화 정보 관리 시스템입니다.
 SELECT, CREATE, UPDATE, DELETE 기능을 구현
 
 ## **기술**
-# Skills
 <br>
 <img src="https://img.shields.io/badge/JAVA-007396?style=for-the-badge&logo=JAVA&logoColor=white%22%3E
 <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white%22%3E
-<br><br><br><br><br>
+/>
 > JAVA SWING 을 이용한 화면 랜더링
 > 
 > 

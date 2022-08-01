@@ -27,3 +27,7 @@ SELECT, CREATE, UPDATE, DELETE 기능을 구현
 ## **구현 언어**
 ![java](https://user-images.githubusercontent.com/102580800/181524878-9bad0bd5-21fe-4a9e-a3bc-7905b15b0ede.svg)
 ![mysql](https://user-images.githubusercontent.com/102580800/181524885-bd96731d-b70c-4579-8b1f-d52c312fac41.svg)
+
+## **ERD**
+![movieinfo_erd](https://user-images.githubusercontent.com/89136556/182077661-7d4f8673-7f30-4094-9270-686fbac84166.png)
+
